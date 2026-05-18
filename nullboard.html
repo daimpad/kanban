@@ -203,7 +203,7 @@
 		outline: none;
 	}
 
-	tt {
+	#templates {
 		display: none;
 	}
 
@@ -1173,7 +1173,7 @@
 		margin-top: 5px;
 	}
 
-	.overlay .backup-conf .opt:before {
+	.overlay .backup-conf .opt::before {
 		--col: #333;
 
 		content: ' ';
@@ -1194,11 +1194,11 @@
 		box-shadow: 0 2px 0 #fff inset, 0 -2px 0 #fff inset, 2px 0 0 #fff inset, -2px 0 0 #fff inset;
 	}
 
-	.overlay .backup-conf .opt:hover:before {
+	.overlay .backup-conf .opt:hover::before {
 		--col: #1489db;
 	}
 
-	.overlay .backup-conf .off .opt:before {
+	.overlay .backup-conf .off .opt::before {
 		background: #fff;
 	}
 
@@ -1542,9 +1542,9 @@
 		<div class=bulk>
 			<a href=# class=view-about>About</a>
 			<a href=# class=view-license>License</a>
-			<a href=https://nullboard.io/changes target=_blank class=view-changes>Changes</a>
-			<a href=https://nullboard.io/github  target=_blank>Github</a>
-			<a href=https://nullboard.io/twitter target=_blank>Twitter</a>
+			<a href=https://nullboard.io/changes target=_blank rel="noopener noreferrer" class=view-changes>Changes</a>
+			<a href=https://nullboard.io/github  target=_blank rel="noopener noreferrer">Github</a>
+			<a href=https://nullboard.io/twitter target=_blank rel="noopener noreferrer">X (Twitter)</a>
 		</div>
 	</div>
 
@@ -1593,7 +1593,7 @@
 	<div class=overlay>
 	</div>
 
-	<tt>
+	<div id="templates" hidden>
 		<!-- templates -->
 		<div class=board>
 			<div class=head>
@@ -1653,7 +1653,7 @@
 		<div class=about>
 			<h1>Nullboard</h1>
 			Minimalist locally-stored kanban board
-			<a href=https://nullboard.io target=_blank>https://nullboard.io</a>
+			<a href=https://nullboard.io target=_blank rel="noopener noreferrer">https://nullboard.io</a>
 			<div></div>
 		</div>
 
@@ -1665,7 +1665,7 @@
 
 			<h3>Auto-backup</h3>
 			<div class=what>
-				<a href=https://nullboard.io/backups target=_blank>What is this?</a>
+				<a href=https://nullboard.io/backups target=_blank rel="noopener noreferrer">What is this?</a>
 			</div>
 
 			<div class=loc>
@@ -1687,26 +1687,27 @@
 
 			<div class=save><a href=# class=check>Check...</a> <a href=# class=ok>Save</a></div>
 		</div>
-	</tt>
+	</div>
 
 </body>
 
 <script src="extras/jquery-3.6.0.min.js"></script>
-<script>window.jQuery || document.write('<script src="https://code.jquery.com/jquery-3.6.0.min.js">\x3C/script>')</script>
+<!-- jQuery 3.6.0 is used; the local copy above is preferred. The CDN fallback below is kept for reference only. -->
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
 
 <script type="text/javascript">
 
-	Number.prototype.clamp = function(min, max)
+	function clamp(value, min, max)
 	{
-		return Math.min(Math.max(this, min), max);
-	};
+		return Math.min(Math.max(value, min), max);
+	}
 
 	/*
 	 *	add a blank line to push 'Prevent this page from opening ...'
 	 *	tack-on from the actual message we are trying to display
 	 */
-	var confirm_org = window.confirm;
-	var alert_org   = window.alert;
+	const confirm_org = window.confirm;
+	const alert_org   = window.alert;
 	window.confirm = function(msg) { return confirm_org(msg + "\n "); }
 	window.alert   = function(msg) { return alert_org  (msg + "\n "); }
 
@@ -3059,7 +3060,7 @@
 	 */
 	function addNote($list, $after, $before)
 	{
-		var $note  = $('tt .note').clone();
+		var $note  = $('#templates .note').clone();
 		var $notes = $list.find('.notes');
 
 		$note.find('.text').html('');
@@ -3109,7 +3110,7 @@
 	{
 		var $board = $('.wrap .board');
 		var $lists = $board.find('.lists');
-		var $list = $('tt .list').clone();
+		var $list = $('#templates .list').clone();
 
 		$list.find('.text').html('');
 		$list.find('.head').addClass('brand-new');
@@ -3342,9 +3343,9 @@
 		var board = NB.board;
 
 		var $wrap = $('.wrap');
-		var $bdiv = $('tt .board');
-		var $ldiv = $('tt .list');
-		var $ndiv = $('tt .note');
+		var $bdiv = $('#templates .board');
+		var $ldiv = $('#templates .list');
+		var $ndiv = $('#templates .note');
 
 		var $b = $bdiv.clone();
 		var $b_lists = $b.find('.lists');
@@ -3708,7 +3709,7 @@
 			throw 'Invalid conf.backups.agents[]'; // as per fixupConfig()
 
 		//
-		var $div = $('tt .backup-conf').clone();
+		var $div = $('#templates .backup-conf').clone();
 		var  div = $div[0];
 
 		var $loc = $div.find('.loc');
@@ -3961,7 +3962,7 @@
 		var $index  = $('.config .boards');
 		var $export = $('.config .exp-board');
 		var $backup = $('.config .auto-backup');
-		var $entry  = $('tt .load-board');
+		var $entry  = $('#templates .load-board');
 
 		var $board = $('.wrap .board');
 		var id_now = NB.board && NB.board.id;
@@ -4037,7 +4038,7 @@
 
 	function htmlEncode(raw)
 	{
-		return $('tt .encoder').text(raw).html();
+		return $('#templates .encoder').text(raw).html();
 	}
 
 	function setText($note, text)
@@ -4048,7 +4049,7 @@
 
 		var hmmm = /\b(https?:\/\/[^\s]+)/mg;
 		text = text.replace(hmmm, function(url){
-			return '<a href="' + url + '" target=_blank>' + url + '</a>';
+			return '<a href="' + url + '" target=_blank rel="noopener noreferrer">' + url + '</a>';
 		});
 
 		if ( NB.peek('fileLinks') )
@@ -4056,7 +4057,7 @@
 			var xmmm = /`(.*?)`/mg;
 			text = text.replace(xmmm, function(full, text){
 				link = 'file:///' + text.replace('\\', '/');
-				return '`<a href="' + link + '" target=_blank>' + text + '</a>`';
+				return '`<a href="' + link + '" target=_blank rel="noopener noreferrer">' + text + '</a>`';
 			});
 		}
 
@@ -4248,7 +4249,7 @@
 		];
 
 		links.forEach(function(l){
-			bulk = bulk.replace(l.text, '<a href="' + l.href + '" target=_blank>' + l.text + '</a>');
+			bulk = bulk.replace(l.text, '<a href="' + l.href + '" target=_blank rel="noopener noreferrer">' + l.text + '</a>');
 		});
 
 		return bulk.trim();
@@ -4555,7 +4556,7 @@
 	//
 	function setFontSize(fs)
 	{
-		fs = fs.clamp(9, 24);
+		fs = clamp(fs, 9, 24);
 
 		$('html').css('--fs', fs + '').addClass('fs-set');
 		updateVarsAndLayout();
@@ -4571,7 +4572,7 @@
 		var fs = getFontSize();
 
 		lh = parseInt(10*lh) / 10.; // trim to a single decimal digit
-		lh  = lh.clamp(fs, 3*fs);
+		lh  = clamp(lh, fs, 3*fs);
 
 		$('html').css('--lh', lh + '').addClass('lh-set');
 		updateVarsAndLayout();
@@ -4581,7 +4582,7 @@
 
 	function setListWidth(lw)
 	{
-		lw = lw.clamp(200, 400);
+		lw = clamp(lw, 200, 400);
 
 		$('html').css('--lw', lw + '').addClass('lw-set');
 		updateVarsAndLayout();
@@ -5052,7 +5053,7 @@
 	});
 
 	$('.view-about').click(function(){
-		var $div = $('tt .about').clone();
+		var $div = $('#templates .about').clone();
 		$div.find('div').html(`Version ${NB.codeVersion}`);
 		showOverlay($div);
 		return false;
@@ -5060,7 +5061,7 @@
 
 	$('.view-license').click(function(){
 
-		var $div = $('tt .license').clone();
+		var $div = $('#templates .license').clone();
 		$div.html(formatLicense());
 		showOverlay($div);
 		return false;
