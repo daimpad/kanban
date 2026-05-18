@@ -1658,92 +1658,224 @@
 	}
 
 	/* ═══════════════════════════════════════════════════
-	   CUSTOM OVERRIDES
+	   MODERN REDESIGN
+	   Farben: nozilla-Palette (#FFFEE5 / #000 / #00FF9C)
 	   ═══════════════════════════════════════════════════ */
 
-	/* Board: volle Seitenbreite mit seitlichem Abstand */
+	/* Logo ausblenden */
+	.logo { display: none !important; }
+
+	/* Board: max 80% Breite, zentriert */
 	.board {
-		width: 100% !important;
-		max-width: 100%;
-		box-sizing: border-box;
-		padding: 20px 32px !important;
+		width: 80% !important;
+		max-width: 80% !important;
+		min-width: 320px !important;
+		box-sizing: border-box !important;
+		margin: 0 auto !important;
+		padding: 32px 16px !important;
 	}
 
-	/* Listen: schwarzer Hintergrund */
-	.board .list {
-		background: #000 !important;
+	.crowded .board {
+		margin-top: 48px !important;
+	}
+
+	/* Board-Kopf (Boardtitel-Leiste) */
+	.board > .head {
+		background: #111 !important;
+		border-radius: 14px !important;
 		border: none !important;
-		border-radius: 10px !important;
+		box-shadow: 0 4px 24px rgba(0,0,0,0.22) !important;
+		margin: 0 0 20px !important;
 	}
 
-	/* Listenüberschrift: nozilla grün */
+	.board > .head .text,
+	.board > .head .edit {
+		font-family: 'Zilla Slab', serif !important;
+		font-size: 18px !important;
+		font-weight: 700 !important;
+		color: #fff !important;
+		letter-spacing: -0.01em !important;
+	}
+
+	/* Listen: tiefes Schwarz, abgerundet */
+	.board .list {
+		background: #111 !important;
+		border: none !important;
+		border-radius: 16px !important;
+		box-shadow: 0 8px 32px rgba(0,0,0,0.18) !important;
+		margin: 0 8px 12px !important;
+	}
+
+	.board .list:first-child { margin-left: 0 !important; }
+	.board .list:last-child  { margin-right: 0 !important; }
+
+	/* Listenüberschrift: nozilla-Grün */
 	.board .list .head .text,
 	.board .list .head .edit {
-		color: var(--nz-green) !important;
 		font-family: 'Zilla Slab', serif !important;
 		font-weight: 700 !important;
+		font-size: 13px !important;
+		color: var(--nz-green) !important;
+		letter-spacing: 0.01em !important;
+	}
+
+	.board .list .head .edit::placeholder {
+		color: rgba(0,255,156,0.4) !important;
 	}
 
 	/* Listenmenü auf dunklem Hintergrund */
 	.board .list .head .menu {
-		background: linear-gradient(to right, transparent, #000 10px) !important;
+		background: linear-gradient(to right, transparent, #111 10px) !important;
 	}
 
 	.board .list .head .menu a {
-		color: rgba(0,255,156,0.6) !important;
+		color: rgba(255,255,255,0.35) !important;
+		transition: color 150ms !important;
 	}
 
 	.board .list .head .menu a:hover {
 		color: var(--nz-green) !important;
 	}
 
-	/* Karten: weiß, abgerundet, dünner Rand, weicher Schatten, grüner Schimmer */
+	.board .list .head .menu a.warn:hover {
+		color: #ff6b6b !important;
+	}
+
+	/* ───────────────────────────────────────────────────
+	   KARTEN — moderner Glossy-Stil
+	   ─────────────────────────────────────────────────── */
 	.board .note {
-		background: linear-gradient(150deg, #ffffff 78%, rgba(0,255,156,0.09) 100%) !important;
-		border: 1px solid rgba(0,0,0,0.18) !important;
-		border-radius: 10px !important;
-		box-shadow:
-			0 1px 3px rgba(0,0,0,0.10),
-			0 4px 12px rgba(0,0,0,0.08),
-			inset 0 0 0 1px rgba(0,255,156,0.12) !important;
-	}
-
-	/* Karte beim Bearbeiten */
-	.board .note.editing {
-		border: 1px solid rgba(0,0,0,0.18) !important;
-		outline: 2px solid var(--nz-green) !important;
-		box-shadow:
-			0 1px 3px rgba(0,0,0,0.10),
-			0 4px 12px rgba(0,0,0,0.08),
-			inset 0 0 0 1px rgba(0,255,156,0.25) !important;
-	}
-
-	/* Raw-Notiz beim Bearbeiten */
-	.board .note.raw.editing {
+		position: relative !important;
 		background: #fff !important;
-		border-radius: 10px !important;
+		border: 1px solid rgba(0,0,0,0.07) !important;
+		border-radius: 12px !important;
+		box-shadow:
+			0 1px 2px rgba(0,0,0,0.04),
+			0 4px 14px rgba(0,0,0,0.07) !important;
+		overflow: hidden !important;
+		transition: box-shadow 180ms ease, transform 180ms ease !important;
+		margin-top: 6px !important;
 	}
 
-	/* Hamburger-Menüs größer */
-	.board .head .menu,
-	.board .head .menu .teaser,
-	.board .head .menu .bulk {
-		font-size: 15px !important;
+	/* Glossy-Highlight oben */
+	.board .note::after {
+		content: '' !important;
+		display: block !important;
+		position: absolute !important;
+		top: 0 !important;
+		left: 0 !important;
+		right: 0 !important;
+		height: 44% !important;
+		border-radius: 12px 12px 40% 40% / 12px 12px 20px 20px !important;
+		background: linear-gradient(180deg,
+			rgba(255,255,255,0.72) 0%,
+			rgba(255,255,255,0.0)  100%) !important;
+		pointer-events: none !important;
+		z-index: 1 !important;
+	}
+
+	/* Hover: leichter Lift + grüner Schimmer */
+	.board .note:hover {
+		box-shadow:
+			0 2px 6px rgba(0,0,0,0.07),
+			0 10px 28px rgba(0,0,0,0.10),
+			0 0 0 1.5px rgba(0,255,156,0.35) !important;
+		transform: translateY(-2px) !important;
+	}
+
+	/* Bearbeitungsmodus */
+	.board .note.editing {
+		border: 1px solid rgba(0,0,0,0.07) !important;
+		outline: 2px solid var(--nz-green) !important;
+		outline-offset: 1px !important;
+		box-shadow:
+			0 4px 20px rgba(0,0,0,0.10),
+			0 0 0 4px rgba(0,255,156,0.12) !important;
+		transform: none !important;
+	}
+
+	/* Drag-Platzhalter */
+	.board .note.dragging,
+	.board .note.dragging.raw {
+		background: rgba(0,0,0,0.05) !important;
+		box-shadow: none !important;
+		border: 1.5px dashed rgba(0,0,0,0.2) !important;
+		outline: none !important;
+		transform: none !important;
+	}
+
+	/* Raw-Notiz */
+	.board .note.raw {
+		background: transparent !important;
+		box-shadow: none !important;
+		border: none !important;
+		border-left: 3px solid var(--nz-green) !important;
+		border-radius: 0 !important;
+		overflow: visible !important;
+	}
+
+	.board .note.raw::after { display: none !important; }
+
+	.board .note.raw.editing {
+		background: rgba(255,255,255,0.8) !important;
+		border-radius: 8px !important;
+		border-left: 3px solid var(--nz-green) !important;
+	}
+
+	/* Note-Text z-index über Glossy-Overlay */
+	.board .note .text,
+	.board .note .edit,
+	.board .note .ops {
+		position: relative !important;
+		z-index: 2 !important;
+	}
+
+	/* Schwebende Karte beim Ziehen */
+	.note-dragster {
+		background: #fff !important;
+		border: 1px solid rgba(0,0,0,0.10) !important;
+		border-radius: 12px !important;
+		box-shadow:
+			0 8px 24px rgba(0,0,0,0.16),
+			0 0 0 1.5px rgba(0,255,156,0.5) !important;
+		outline: none !important;
+	}
+
+	/* Hamburger-Menüs: größer */
+	.board .head .menu {
+		font-size: 16px !important;
+		padding-left: 40px !important;
 	}
 
 	.board .note .ops {
-		font-size: 13px !important;
+		font-size: 14px !important;
 	}
 
 	.board .note .ops .teaser {
-		padding-right: 5px !important;
-		margin-top: 4px !important;
+		margin-top: 3px !important;
+		padding-right: 6px !important;
 	}
 
-	/* Note ops bulk größer */
 	.board .note .ops .bulk a {
 		font-size: 12px !important;
-		padding-right: 6px !important;
+		padding-right: 7px !important;
+	}
+
+	/* Board-Menü (Undo/Redo etc.) auf dunklem Kopf */
+	.board > .head .menu {
+		background: linear-gradient(to right, transparent, #111 10px) !important;
+	}
+
+	.board > .head .menu a {
+		color: rgba(255,255,255,0.45) !important;
+	}
+
+	.board > .head .menu a:hover {
+		color: #fff !important;
+	}
+
+	.board > .head .menu a.warn:hover {
+		color: #ff6b6b !important;
 	}
 
 </style>
