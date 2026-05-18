@@ -1,5 +1,5 @@
 ﻿<!doctype html>
-<html>
+<html lang="en">
 <head>
   <!--
 
@@ -216,9 +216,6 @@
 	.no-user-select {
 		-webkit-touch-callout: none;
 		-webkit-user-select: none;
-		-khtml-user-select: none;
-		-moz-user-select: none;
-		-ms-user-select: none;
 		user-select: none;
 	}
 
@@ -238,9 +235,6 @@
 	body.dragging {
 		-webkit-touch-callout: none;
 		-webkit-user-select: none;
-		-khtml-user-select: none;
-		-moz-user-select: none;
-		-ms-user-select: none;
 		user-select: none;
 	}
 
@@ -248,18 +242,13 @@
 	.board {
 		min-width: calc( var(--lw) * 1px );
 
-		width: -moz-max-content;    /* firefox */
-		width: -webkit-max-content; /* chrome  */
-		width: intrinsic;           /* safari  */
+		width: max-content;
 
 		margin: 0 auto;
 		padding: 20px;
 
 		-webkit-touch-callout: none;
 		-webkit-user-select: none;
-		-khtml-user-select: none;
-		-moz-user-select: none;
-		-ms-user-select: none;
 		user-select: none;
 	}
 
@@ -271,7 +260,7 @@
 		text-decoration: none;
 	}
 
-	.board u:before {
+	.board u::before {
 		content: '\00D7';
 		position: relative;
 		top: 2px;
@@ -314,6 +303,7 @@
 		color: #1489db;
 		opacity: 0.8;
 	}
+
 
 	.board .head.editing .text {
 		display: none;
@@ -586,7 +576,7 @@
 		padding-right: 3px;
 	}
 
-	.board .note .ops .teaser:before {
+	.board .note .ops .teaser::before {
 		content: '\2261';
 	}
 
@@ -647,12 +637,12 @@
 		padding: 1px 3px 0 1px;
 	}
 
-	.board .note.collapsed .ops .teaser:before {
+	.board .note.collapsed .ops .teaser::before {
 		content: '_';
 		top: 1px;
 	}
 
-	.board .note.collapsed:hover .ops .teaser:before {
+	.board .note.collapsed:hover .ops .teaser::before {
 		content: '\2261';
 	}
 
@@ -732,7 +722,7 @@
 		display: block;
 	}
 
-	.logo .bulk a:before {
+	.logo .bulk a::before {
 		display: inline-block;
 		content: '-';
 		width: 11px;
@@ -819,7 +809,7 @@
 		color: #1489db;
 	}
 
-	.config .bulk .boards a.load-board.active:before {
+	.config .bulk .boards a.load-board.active::before {
 		content: '\2022 ';
 		display: inline-block;
 		width: 13px;
@@ -838,7 +828,7 @@
 		box-shadow: 0 0 1px #0002 inset;
 	}
 
-	.config .bulk .boards a.load-board.dragging.active:before {
+	.config .bulk .boards a.load-board.dragging.active::before {
 		content: '';
 	}
 
@@ -895,7 +885,7 @@
 		opacity: 0.4;
 	}
 
-	.config.backups-on .bulk .auto-backup:before {
+	.config.backups-on .bulk .auto-backup::before {
 		content: '\2713 ';
 		display: inline-block;
 		width: 15px;
@@ -923,7 +913,7 @@
 		color: #d20;
 	}
 
-	.config.backups-on.backup-err .bulk .auto-backup:before {
+	.config.backups-on.backup-err .bulk .auto-backup::before {
 		content: '! ';
 		color: #d20;
 		width: 13px;
@@ -1033,7 +1023,7 @@
 	}
 
 	/***/
-	.config .bulk .ui-prefs .switch-font.active:before {
+	.config .bulk .ui-prefs .switch-font.active::before {
 		content: '\2022 ';
 		display: inline-block;
 		width: 13px;
