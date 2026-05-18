@@ -1572,10 +1572,106 @@
 		color: #ddd;
 	}
 
+	/* ═══════════════════════════════════════════════════
+	   LOGIN GATE
+	   ═══════════════════════════════════════════════════ */
+	#nb-login-gate {
+		position: fixed;
+		inset: 0;
+		z-index: 9999;
+		background: var(--nz-paper);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	#nb-login-box {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		width: 280px;
+		padding: 32px;
+		background: var(--nz-paper);
+		border: 2px solid var(--nz-ink);
+		box-shadow: 6px 6px 0 0 var(--nz-ink);
+	}
+
+	#nb-login-box h1 {
+		font-family: 'Zilla Slab', serif;
+		font-weight: 700;
+		font-size: 28px;
+		line-height: 1.1;
+		margin: 0 0 4px;
+		color: var(--nz-ink);
+	}
+
+	#nb-login-box p {
+		font-family: 'Inter', sans-serif;
+		font-size: 13px;
+		color: var(--nz-ink-70);
+		margin: 0;
+	}
+
+	#nb-login-pw {
+		width: 100%;
+		box-sizing: border-box;
+		padding: 8px 10px;
+		font-family: 'Inter', sans-serif;
+		font-size: 13px;
+		border: 2px solid var(--nz-ink);
+		border-radius: 0;
+		background: var(--nz-paper);
+		color: var(--nz-ink);
+		outline: none;
+	}
+
+	#nb-login-pw:focus {
+		border-color: var(--nz-green);
+	}
+
+	#nb-login-btn {
+		padding: 9px 0;
+		font-family: 'Space Mono', monospace;
+		font-weight: 700;
+		font-size: 11px;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		background: var(--nz-green);
+		color: var(--nz-ink);
+		border: 2px solid var(--nz-ink);
+		border-radius: 0;
+		box-shadow: 4px 4px 0 0 var(--nz-ink);
+		cursor: pointer;
+		transition: box-shadow 80ms, transform 80ms;
+	}
+
+	#nb-login-btn:active {
+		box-shadow: 1px 1px 0 0 var(--nz-ink);
+		transform: translate(3px, 3px);
+	}
+
+	#nb-login-err {
+		font-family: 'Inter', sans-serif;
+		font-size: 12px;
+		color: #c00;
+		margin: 0;
+	}
+
 </style>
 
 </head>
 <body>
+
+	<div id="nb-login-gate">
+		<div id="nb-login-box">
+			<h1>Nullboard</h1>
+			<p>Passwort eingeben</p>
+			<input type="password" id="nb-login-pw" placeholder="PASSWORT" autocomplete="current-password">
+			<button id="nb-login-btn">Zugang</button>
+			<p id="nb-login-err" hidden>Falsches Passwort.</p>
+		</div>
+	</div>
+
 	<div class="logo">
 		<a class=site href=https://nullboard.io>Nullboard</a>
 		<i class=alert></i>
@@ -1751,6 +1847,59 @@
 	window.confirm = function(msg) { return confirm_org(msg + "\n "); }
 	window.alert   = function(msg) { return alert_org  (msg + "\n "); }
 
+</script>
+
+<script type="text/javascript">
+(function() {
+	/*
+	 *  Login Gate — einfacher Passwortschutz.
+	 *
+	 *  PASSWORT ÄNDERN:
+	 *  1. Öffne DevTools > Console
+	 *  2. Führe aus:
+	 *       crypto.subtle.digest('SHA-256', new TextEncoder().encode('NeuesPasswort'))
+	 *         .then(b => console.log([...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')))
+	 *  3. Kopiere den Hash und ersetze PW_HASH unten.
+	 *
+	 *  Aktuelles Standard-Passwort: nullboard
+	 */
+	const PW_HASH    = 'af71e069f98d43af90ebb0ae29f55f702ebc7b990b9b814c8d6f2233e8a697b0';
+	const SESSION_KEY = 'nb_auth';
+
+	const gate = document.getElementById('nb-login-gate');
+	const input = document.getElementById('nb-login-pw');
+	const btn   = document.getElementById('nb-login-btn');
+	const err   = document.getElementById('nb-login-err');
+
+	if (sessionStorage.getItem(SESSION_KEY) === '1') {
+		gate.remove();
+		return;
+	}
+
+	async function verify(pw) {
+		const data = new TextEncoder().encode(pw);
+		const hash = await crypto.subtle.digest('SHA-256', data);
+		return [...new Uint8Array(hash)].map(x => x.toString(16).padStart(2,'0')).join('');
+	}
+
+	async function attempt() {
+		const hash = await verify(input.value);
+		if (hash === PW_HASH) {
+			sessionStorage.setItem(SESSION_KEY, '1');
+			gate.remove();
+		} else {
+			err.hidden = false;
+			input.value = '';
+			input.focus();
+			input.classList.add('ding');
+			setTimeout(() => input.classList.remove('ding'), 300);
+		}
+	}
+
+	btn.addEventListener('click', attempt);
+	input.addEventListener('keydown', e => { if (e.key === 'Enter') attempt(); });
+	input.focus();
+})();
 </script>
 
 <script type="text/javascript">
