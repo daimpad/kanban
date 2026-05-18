@@ -331,7 +331,7 @@
 
 	.board .head.editing .edit {
 		display: block;
-		outline: 1px solid var(--nz-green);
+		outline: 2px solid var(--nz-green);
 	}
 
 	.board .menu {
@@ -571,7 +571,7 @@
 
 	.board .note.editing {
 		box-shadow: none;
-		outline: 1px solid var(--nz-green);
+		outline: 2px solid var(--nz-green);
 	}
 
 	.board .note.editing .text {
@@ -615,7 +615,7 @@
 
 	.board .note .ops .bulk {
 		display: none;
-		background: #fff;
+		background: var(--nz-paper);
 		border-left: none;
 		padding: 1px 0 2px 5px;
 		font-size: calc( var(--fs-nops) * 1px );
@@ -647,7 +647,7 @@
 	}
 
 	.board .note.raw.editing {
-		background: #fff;
+		background: var(--nz-paper);
 	}
 
 	.board .note.raw .text {
@@ -714,7 +714,7 @@
 	}
 
 	.crowded .logo:hover {
-		background: #fff;
+		background: var(--nz-paper);
 		box-shadow: 0 1px 2px rgba(0,0,0,0.2);
 	}
 
@@ -745,6 +745,12 @@
 	.logo a.site,
 	.logo .bulk a {
 		color: #000;
+	}
+
+	.logo a.site {
+		font-family: 'Zilla Slab', serif;
+		font-weight: 700;
+		font-size: calc(14rem / 11);
 	}
 
 	.logo .bulk a:hover {
@@ -786,7 +792,7 @@
 
 	.crowded .config:hover,
 	.crowded.adjusting .config {
-		background: #fff;
+		background: var(--nz-paper);
 		box-shadow: 0 1px 2px rgba(0,0,0,0.2);
 	}
 
@@ -854,11 +860,11 @@
 	}
 
 	.config .bulk .boards a.load-board.dragging {
-		background: #DDE1E5;
+		background: var(--nz-ink-20);
 		border-radius: 0;
 		color: transparent;
 		transition: none;
-		box-shadow: 0 0 1px #0002 inset;
+		box-shadow: none;
 	}
 
 	.config .bulk .boards a.load-board.dragging.active::before {
@@ -871,12 +877,12 @@
 		opacity: 0;
 		line-height: calc(19 / 11);
 		padding-left: 5px;
-		background: #fff;
+		background: var(--nz-paper);
 		color: #000;
 		border-radius: 0;
 		cursor: move;
-		outline: 1px solid #ACB4BC;
-		box-shadow: 0px 1px 3px #00000030;
+		outline: 2px solid var(--nz-ink);
+		box-shadow: 4px 4px 0 0 var(--nz-ink);
 	}
 
 	.config .bulk a i,
@@ -935,7 +941,7 @@
 		position: absolute;
 		width: 4px;
 		height: 4px;
-		border-radius: 10px;
+		border-radius: 50%;
 		top: 13px;
 		right: -4px;
 		background: #d20;
@@ -1233,7 +1239,7 @@
 	}
 
 	.overlay .backup-conf .off .opt::before {
-		background: #fff;
+		background: var(--nz-paper);
 	}
 
 	.overlay .backup-conf .opt:hover {
@@ -1374,7 +1380,7 @@
 	}
 
 	.theme-dark .board .menu a:hover {
-		color: #fc4;
+		color: var(--nz-green);
 	}
 
 	.theme-dark .board .menu a.warn:hover,
@@ -1402,8 +1408,8 @@
 	}
 
 	.theme-dark .board .note {
-		background: linear-gradient(#242426, #202022);
-		box-shadow: 0 1px 3px #000a;
+		background: #1a1a1a;
+		box-shadow: 4px 4px 0 0 #fff2;
 		text-shadow: 0 0 4px #0008;
 	}
 
@@ -1453,7 +1459,7 @@
 	}
 
 	.theme-dark .board .note .ops .bulk a:hover {
-		color: #fc2;
+		color: var(--nz-green);
 	}
 
 	/***/
@@ -1464,9 +1470,9 @@
 	}
 
 	.theme-dark .note-dragster {
-		box-shadow: 0px 1px 4px #000;
-		background: linear-gradient(#242426, #202022);
-		outline: 1px solid #fc28;
+		box-shadow: 6px 6px 0 0 #fff2;
+		background: #1a1a1a;
+		outline: 2px solid #fff4;
 	}
 
 	.theme-dark .note-dragster a {
@@ -1500,7 +1506,7 @@
 	}
 
 	.theme-dark .logo a:hover {
-		color: #fc2;
+		color: var(--nz-green);
 	}
 
 	.theme-dark .logo > a:hover {
@@ -1518,7 +1524,7 @@
 	}
 
 	.theme-dark .config a:hover {
-		color: #fc2;
+		color: var(--nz-green);
 	}
 
 	.theme-dark .config .bulk .boards {
@@ -1527,7 +1533,7 @@
 	}
 
 	.theme-dark .config .bulk .boards a.load-board.active {
-		color: #fc2;
+		color: var(--nz-green);
 	}
 
 	.theme-dark .config .bulk .boards a.load-board.active:hover {
@@ -1541,7 +1547,7 @@
 	.theme-dark.fs-set .config .bulk .ui-prefs .f-prefs tr.ui-fs td.val,
 	.theme-dark.lh-set .config .bulk .ui-prefs .f-prefs tr.ui-lh td.val,
 	.theme-dark.lw-set .config .bulk .ui-prefs .f-prefs tr.ui-lw td.val {
-		color: #fc2;
+		color: var(--nz-green);
 	}
 
 	.theme-dark .config a.switch-theme i {
@@ -1561,8 +1567,8 @@
 
 	.theme-dark .load-dragster {
 		background: #09090A;
-		box-shadow: 0px 2px 4px #000;
-		outline: 1px solid #fc2a;
+		box-shadow: 4px 4px 0 0 #fff2;
+		outline: 2px solid #fff4;
 		color: #ddd;
 	}
 
