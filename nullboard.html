@@ -49,6 +49,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nullboard</title>
   <link rel="icon" href="extras/favicon-16.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Mono:wght@700&family=Zilla+Slab:wght@700&display=swap" rel="stylesheet">
   <style>
 
 	/***/
@@ -128,11 +131,21 @@
 
 	/***/
 	html {
-		--ff: f-barlow, sans-serif;
+		--nz-green:      #00FF9C;
+		--nz-paper:      #FFFEE5;
+		--nz-ink:        #000000;
+		--nz-ink-70:     rgba(0,0,0,0.72);
+		--nz-ink-50:     rgba(0,0,0,0.50);
+		--nz-ink-20:     rgba(0,0,0,0.18);
+		--nz-radius:     0;
+		--nz-shadow-md:  6px 6px 0 0 var(--nz-ink);
+		--nz-stroke-rule: 2px;
+
+		--ff: 'Inter', sans-serif;
 
 		--fs: 11;                        /* font-size   */
-		--lh: calc( var(--fs) * 1.25 );  /* line-height */
-		--fs-head: 13.6;                 /* font-size of board heading */
+		--lh: calc( var(--fs) * 1.55 );  /* line-height */
+		--fs-head: 14;                   /* font-size of board heading */
 		--fs-nops: 9;                    /* font-size of the note ops */
 		--lw: calc(20 * var(--fs) + 30); /* .list width */
 	}
@@ -183,8 +196,7 @@
 	}
 
 	body {
-		background: #fff;
-		background: #f8f9fb;
+		background: var(--nz-paper);
 	}
 
 	/***/
@@ -285,6 +297,14 @@
 		border: none;
 	}
 
+	.board > .head .text,
+	.board > .head .edit {
+		font-family: 'Zilla Slab', serif;
+		font-size: calc( var(--fs-head) * 1.2px );
+		font-weight: 700;
+		color: var(--nz-paper);
+	}
+
 	.board .head .text {
 		min-height: 20px;
 		white-space: pre;
@@ -300,7 +320,7 @@
 		font-size: calc(10rem / 11);
 		line-height: calc(22 / 10);
 		text-transform: uppercase;
-		color: #1489db;
+		color: var(--nz-green);
 		opacity: 0.8;
 	}
 
@@ -311,7 +331,7 @@
 
 	.board .head.editing .edit {
 		display: block;
-		outline: 1px solid #8eaedd;
+		outline: 1px solid var(--nz-green);
 	}
 
 	.board .menu {
@@ -320,7 +340,7 @@
 		right: 0;
 		height: 20px;
 		padding: 5px 6px 7px 30px;
-		background: linear-gradient(to right, #EAEDF000, #EAEDF0 10px);
+		background: linear-gradient(to right, transparent, var(--nz-paper) 10px);
 		line-height: calc(20 / 11);
 	}
 
@@ -354,15 +374,29 @@
 	}
 
 	.board > .head {
-		background: #EAEDF0;
+		background: var(--nz-ink);
+		color: var(--nz-paper);
 		padding: 5px;
 		margin: 0 0 10px;
-		border-radius: 2px;
+		border-radius: 0;
 		position: relative;
 	}
 
 	.board > .head .menu {
 		margin-right: 5px;
+	}
+
+	.board > .head .menu {
+		background: linear-gradient(to right, transparent, var(--nz-ink) 10px);
+	}
+	.board > .head .menu a {
+		color: rgba(255,254,229,0.7);
+	}
+	.board > .head .menu a:hover {
+		color: var(--nz-paper);
+	}
+	.board > .head .menu a.warn:hover {
+		color: var(--nz-green) !important;
 	}
 
 	/***/
@@ -389,8 +423,9 @@
 		vertical-align: top;
 		width: calc( var(--lw) * 1px );
 		margin: 0 5px 10px;
-		background: linear-gradient(#EAEDF0 30px, #DDE1E5 90px);
-		border-radius: 2px;
+		background: var(--nz-paper);
+		border: 2px solid var(--nz-ink);
+		border-radius: 0;
 	}
 
 	.board .list::-webkit-scrollbar {
@@ -458,19 +493,17 @@
 
 	/***/
 	.board .note {
-		background: #fff;
+		background: var(--nz-paper);
 		margin-top: 5px;
-		box-shadow: 0 1px 2px #bbb, 0 0 1px #ddd;
+		box-shadow: 4px 4px 0 0 var(--nz-ink);
 		position: relative;
 	}
 
 	.board .note.dragging,
 	.board .note.dragging.raw {
-		background: #CED4DA;
-		box-shadow: 0 +1px 0 #0001 inset,
-		            0 -1px 0 #0001 inset,
-		            +1px 0 0 #0001 inset,
-		            -1px 0 0 #0001 inset;
+		background: var(--nz-ink-20);
+		box-shadow: none;
+		outline: 2px solid var(--nz-ink);
 	}
 
 	.board .note.dragging * {
@@ -521,7 +554,7 @@
 
 	.reveal .board .head .text a,
 	.reveal .board .note .text a {
-		color: #1489db;
+		color: var(--nz-green);
 		cursor: pointer;
 	}
 
@@ -538,7 +571,7 @@
 
 	.board .note.editing {
 		box-shadow: none;
-		outline: 1px solid #8eaedd;
+		outline: 1px solid var(--nz-green);
 	}
 
 	.board .note.editing .text {
@@ -593,6 +626,9 @@
 
 	.board .note .ops .bulk a {
 		padding-right: 4px;
+		font-family: 'Space Mono', monospace;
+		font-weight: 700;
+		letter-spacing: 0.08em;
 	}
 
 	.board .note .ops:hover .bulk {
@@ -651,17 +687,14 @@
 		z-index: 2;
 		position: absolute;
 		opacity: 0;
-		background: #fff;
+		background: var(--nz-paper);
 		white-space: pre-wrap;
 		cursor: move;
 
 		padding: 5px 25px 6px 10px;
 
-		box-shadow: 0 +1px 0 #ACB4BC inset,
-		            0 -1px 0 #ACB4BC inset,
-		            +1px 0 0 #ACB4BC inset,
-		            -1px 0 0 #ACB4BC inset,
-		            0px 1px 3px #00000030;
+		outline: 2px solid var(--nz-ink);
+		box-shadow: 6px 6px 0 0 var(--nz-ink);
 	}
 
 	.note-dragster a {
@@ -677,7 +710,7 @@
 		padding: 6px 12px;
 		z-index: 3;
 		opacity: 0.6;
-		background: #f8f9fb;
+		background: var(--nz-paper);
 	}
 
 	.crowded .logo:hover {
@@ -715,7 +748,7 @@
 	}
 
 	.logo .bulk a:hover {
-		color: #1489db;
+		color: var(--nz-green);
 	}
 
 	.logo .bulk a {
@@ -748,7 +781,7 @@
 		right: 21px;
 		line-height: calc(19 / 11);
 		z-index: 3;
-		background: #f8f9fb;
+		background: var(--nz-paper);
 	}
 
 	.crowded .config:hover,
@@ -764,7 +797,7 @@
 	}
 
 	.config a:hover {
-		color: #1489db;
+		color: var(--nz-green);
 	}
 
 	.config .teaser {
@@ -806,7 +839,7 @@
 	}
 
 	.config .bulk .boards a.load-board.active {
-		color: #1489db;
+		color: var(--nz-green);
 	}
 
 	.config .bulk .boards a.load-board.active::before {
@@ -822,7 +855,7 @@
 
 	.config .bulk .boards a.load-board.dragging {
 		background: #DDE1E5;
-		border-radius: 2px;
+		border-radius: 0;
 		color: transparent;
 		transition: none;
 		box-shadow: 0 0 1px #0002 inset;
@@ -840,7 +873,7 @@
 		padding-left: 5px;
 		background: #fff;
 		color: #000;
-		border-radius: 2px;
+		border-radius: 0;
 		cursor: move;
 		outline: 1px solid #ACB4BC;
 		box-shadow: 0px 1px 3px #00000030;
@@ -997,7 +1030,7 @@
 	.fs-set .config .bulk .ui-prefs .f-prefs tr.ui-fs td.val,
 	.lh-set .config .bulk .ui-prefs .f-prefs tr.ui-lh td.val,
 	.lw-set .config .bulk .ui-prefs .f-prefs tr.ui-lw td.val {
-		color: #1489db;
+		color: var(--nz-green);
 		cursor: pointer;
 	}
 
@@ -1070,11 +1103,12 @@
 	.overlay > div {
 		font-size: calc(12rem / 11);
 		line-height: calc(16 / 12);
-		background: #fff;
+		background: var(--nz-paper);
 		align-self: start;
 		margin-top: 100px;
-		border-radius: 1px;
-		box-shadow: 0 2px 6px #000;
+		border-radius: 0;
+		box-shadow: 6px 6px 0 0 var(--nz-ink);
+		border: 2px solid var(--nz-ink);
 	}
 
 	/***/
@@ -1087,7 +1121,7 @@
 	}
 
 	.overlay > div.license a {
-		color: #1489db;
+		color: var(--nz-green);
 	}
 
 	.overlay > div.license span {
@@ -1110,7 +1144,7 @@
 
 	.overlay > div.about a {
 		display: block;
-		color: #1489db;
+		color: var(--nz-green);
 	}
 
 	.overlay > div.about div {
@@ -1166,7 +1200,7 @@
 	}
 
 	.overlay .backup-conf .what a {
-		color: #1489db;
+		color: var(--nz-green);
 	}
 
 	.overlay .backup-conf .opt {
@@ -1190,12 +1224,12 @@
 		top: 1px;
 		background: var(--col);
 		border: 1px solid var(--col);
-		border-radius: 1px;
+		border-radius: 0;
 		box-shadow: 0 2px 0 #fff inset, 0 -2px 0 #fff inset, 2px 0 0 #fff inset, -2px 0 0 #fff inset;
 	}
 
 	.overlay .backup-conf .opt:hover::before {
-		--col: #1489db;
+		--col: var(--nz-green);
 	}
 
 	.overlay .backup-conf .off .opt::before {
@@ -1203,7 +1237,7 @@
 	}
 
 	.overlay .backup-conf .opt:hover {
-		color: #1489db;
+		color: var(--nz-green);
 	}
 
 	.overlay .backup-conf .opt {
@@ -1277,7 +1311,7 @@
 	}
 
 	.overlay .backup-conf .save a {
-		color: #1489db;
+		color: var(--nz-green);
 	}
 
 	.overlay .backup-conf.off .save .check {
